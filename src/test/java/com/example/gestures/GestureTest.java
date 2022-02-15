@@ -39,21 +39,5 @@ public class GestureTest {
     public void sampleTest() {
         wait.until(ExpectedConditions.
                 elementToBeClickable(AppiumBy.accessibilityId("login"))).click();
-        wait.until(presenceOfElementLocated(AppiumBy.accessibilityId("slider1")));
-        driver.findElement(AppiumBy.accessibilityId("slider1")).click();
-        wait.until(presenceOfElementLocated(AppiumBy.accessibilityId("slider")));
-        WebElement slider = driver.findElement(AppiumBy.accessibilityId("slider"));
-
-        Point source = slider.getLocation();
-        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
-        Sequence sequence = new Sequence(finger, 1);
-        sequence.addAction(finger.createPointerMove(ofMillis(0),
-                PointerInput.Origin.viewport(), source.x, source.y));
-        sequence.addAction(finger.createPointerDown(PointerInput.MouseButton.MIDDLE.asArg()));
-        sequence.addAction(new Pause(finger, ofMillis(600)));
-        sequence.addAction(finger.createPointerMove(ofMillis(600),
-                PointerInput.Origin.viewport(), source.x + 400, source.y));
-        sequence.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
-        driver.perform(singletonList(sequence));
     }
 }

@@ -69,4 +69,18 @@ public class GestureTest {
 
         driver.perform(singletonList(dragAndDrop));
     }
+
+    @Test
+    public void dragAndDropUsingAppiumPluginTest() {
+        wait.until(elementToBeClickable(AppiumBy.accessibilityId("login"))).click();
+        wait.until(elementToBeClickable(AppiumBy.accessibilityId("dragAndDrop"))).click();
+        final WebElement dragMe = wait.until(presenceOfElementLocated(AppiumBy.accessibilityId("dragMe")));
+        final WebElement dropzone = wait.until(elementToBeClickable(AppiumBy.accessibilityId("dropzone")));
+
+        driver.addCommand(HttpMethod.POST, String.format("/session/%s/plugin/actions/dragAndDrop",
+                driver.getSessionId()), "dragAndDrop");
+
+        driver.execute("dragAndDrop", ImmutableMap.of("sourceId", ((RemoteWebElement) dragMe).getId(),
+                "destinationId", ((RemoteWebElement) dropzone).getId()));
+    }
 }
